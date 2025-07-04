@@ -12,7 +12,7 @@ import Profile from './pages/User/Profile.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 
 // Auth
-import Login from './pages/Auth/login.jsx'
+import Login from './pages/Auth/Login.jsx'
 import Register from './pages/Auth/Register.jsx'
 import AdminRoute from './pages/Admin/AdminRoute.jsx'
 import UserList from './pages/Admin/UserList.jsx'

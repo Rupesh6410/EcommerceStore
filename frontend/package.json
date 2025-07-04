@@ -16,7 +16,6 @@
     "@reduxjs/toolkit": "^2.6.0",
     "apexcharts": "^4.5.0",
     "axios": "^1.8.1",
-    "dotenv": "^17.0.1",
     "flowbite": "^3.1.2",
     "framer-motion": "^12.23.0",
     "moment": "^2.30.1",
