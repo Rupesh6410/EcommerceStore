@@ -85,7 +85,7 @@ const ProductDetails = () => {
             <div className="w-full lg:w-2/5">
               <div className="relative overflow-hidden rounded-2xl shadow-lg">
                 <img
-                  src={product.image}
+                  src={`${IMAGE_BASE_URL}/${product.image}`}
                   alt={product.name}
                   className="w-full h-[500px] object-cover"
                 />

@@ -8,7 +8,7 @@ const Product = ({ product }) => {
       <div className="relative bg-white rounded-xl shadow-md p-3 w-48 sm:w-52 md:w-56 hover:shadow-lg transition-all duration-300">
         <div className="relative h-48 w-full overflow-hidden rounded-lg">
           <img
-            src={product.image}
+            src={`${IMAGE_BASE_URL}/${product.image}`}
             alt={product.name}
             className="w-full h-full object-cover rounded"
           />

@@ -41,7 +41,7 @@ const AllProducts = () => {
           >
             <Link to={`/admin/product/update/${product._id}`}>
               <img
-                src={product.image}
+                src={`${IMAGE_BASE_URL}/${product.image}`}
                 alt={product.name}
                 className="w-full h-48 object-cover"
               />

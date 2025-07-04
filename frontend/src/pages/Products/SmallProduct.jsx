@@ -10,7 +10,7 @@ const SmallProduct = ({ product }) => {
       <div className="w-full h-[16rem] overflow-hidden rounded-t-lg relative">
         <Link to={`/product/${product._id}`}>
           <img
-            src={product.image}
+            src={`${IMAGE_BASE_URL}/${product.image}`}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
           />
