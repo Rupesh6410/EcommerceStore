@@ -19,8 +19,8 @@ const app = express();
 
 // ✅ CORS Configuration
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://your-vercel-site.vercel.app", 
+  "http://localhost:5173", // your Vite frontend
+  "https://ecommerce-store-eight-drab.vercel.app", 
 ];
 
 app.use(
