@@ -13,6 +13,7 @@ import {
   FaStar,
   FaStore,
 } from 'react-icons/fa';
+import { IMAGE_BASE_URL } from '../../redux/constants';
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
@@ -55,7 +56,7 @@ const ProductCarousel = () => {
                   {/* Image */}
                   <div className="h-[16rem] overflow-hidden relative">
                     <img
-                      src={image}
+                      src={`${IMAGE_BASE_URL}/${image}`}
                       alt={name || 'Product'}
                       className="w-full h-[16rem] object-contain transition-transform duration-300 hover:scale-105"
                     />

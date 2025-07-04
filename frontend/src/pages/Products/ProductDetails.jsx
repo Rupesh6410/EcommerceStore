@@ -20,6 +20,7 @@ import HeartIcon from "./HeartIcon";
 import Ratings from "./Ratings";
 import ProductTabs from "./ProductTabs";
 import { addToCart } from "../../redux/features/cart/cartSlice.js";
+import { IMAGE_BASE_URL } from "../../redux/constants";
 
 
 const ProductDetails = () => {

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { toast } from "react-toastify";
 import HeartIcon from "./HeartIcon";
+import { IMAGE_BASE_URL } from "../../redux/constants";
 
 const ProductCard = ({ p }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const ProductCard = ({ p }) => {
       <div className="relative">
         <Link to={`/product/${p._id}`}>
           <img
-            src={p.image}
+            src={`${IMAGE_BASE_URL}/${p.image}`}
             alt={p.name}
             className="w-full h-44 object-cover transition-transform duration-300 hover:scale-105"
           />
