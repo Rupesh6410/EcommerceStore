@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store.js'
 import Profile from './pages/User/Profile.jsx'
 
+
 // priate route
 import PrivateRoute from './components/PrivateRoute.jsx'
 

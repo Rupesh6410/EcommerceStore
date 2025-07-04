@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-import { FaHeart, FaRegHeart, FaVaadin } from "react-icons/fa";
+import { useEffect, useMemo } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addToFavorites,
   removeFromFavorites,
   setFavorites,
 } from "../../redux/features/favorites/favoriteSlice";
-
 import {
   addFavoriteToLocalStorage,
   getFavoritesFromLocalStorage,
@@ -16,21 +15,25 @@ import {
 const HeartIcon = ({ product }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites) || [];
-  const isFavorite = favorites.some((p) => p._id === product._id);
+
+  const isFavorite = useMemo(
+    () => favorites.some((p) => p._id === product._id),
+    [favorites, product._id]
+  );
 
   useEffect(() => {
-    const favoritesFromLocalStorage = getFavoritesFromLocalStorage();
-    dispatch(setFavorites(favoritesFromLocalStorage));
-  }, []);
+    if (favorites.length === 0) {
+      const favoritesFromLocalStorage = getFavoritesFromLocalStorage();
+      dispatch(setFavorites(favoritesFromLocalStorage));
+    }
+  }, [dispatch, favorites.length]);
 
   const toggleFavorites = () => {
     if (isFavorite) {
       dispatch(removeFromFavorites(product));
-      // remove the product from the localStorage as well
       removeFavoriteFromLocalStorage(product._id);
     } else {
       dispatch(addToFavorites(product));
-      // add the product to localStorage as well
       addFavoriteToLocalStorage(product);
     }
   };
@@ -39,6 +42,8 @@ const HeartIcon = ({ product }) => {
     <div
       className="absolute top-2 right-5 cursor-pointer"
       onClick={toggleFavorites}
+      title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+      aria-label={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
     >
       {isFavorite ? (
         <FaHeart className="text-pink-500" />

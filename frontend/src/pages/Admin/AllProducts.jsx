@@ -3,89 +3,84 @@ import moment from "moment";
 import { useAllProductsQuery } from "../../redux/api/productApiSlice";
 import AdminMenu from "./AdminMenu";
 import Loader from "../../components/Loader";
+import { motion } from "framer-motion";
 
 const AllProducts = () => {
   const { data: products, isLoading, isError } = useAllProductsQuery();
-  const navigate = useNavigate(); // ✅ Initialize useNavigate()
+  const navigate = useNavigate();
 
-  if (isLoading) {
-    return <Loader />;
-  }
-  if (isError) {
+  if (isLoading) return <Loader />;
+  if (isError)
     return (
       <h1 className="text-red-500 text-center text-lg mt-4">
         Error Loading Products
       </h1>
     );
-  }
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen ml-[4%]">
-      <div className="flex justify-end">
+    <section className="min-h-screen p-4 bg-neutral-50 dark:bg-neutral-900 xl:ml-[2rem]">
+      {/* Admin Menu */}
+      <div className="flex justify-end mb-4">
         <AdminMenu />
       </div>
 
-      {/* Title and Count */}
-      <h2 className="text-xl font-bold text-gray-700 mb-4">
+      {/* Header */}
+      <h2 className="text-xl font-heading font-bold text-neutral-800 dark:text-white mb-4">
         All Products ({products?.length})
       </h2>
 
-      {/* Product List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-5">
         {products?.map((product) => (
-          <div
+          <motion.div
             key={product._id}
-            className="bg-white border rounded-lg shadow-sm hover:shadow-md transition duration-200"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white dark:bg-neutral-800 rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden cursor-pointer"
           >
-            {/* Link wrapping only the image and title */}
             <Link to={`/admin/product/update/${product._id}`}>
-              <div className="h-48 w-48">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover rounded-t-lg"
-                />
-              </div>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover"
+              />
             </Link>
 
-            {/* Product Info */}
-            <div className="p-3">
+            <div className="p-4 space-y-1">
               <Link to={`/admin/product/update/${product._id}`}>
-                <h5 className="text-sm font-semibold text-gray-800 truncate">
+                <h3 className="font-semibold text-sm text-neutral-800 dark:text-white truncate">
                   {product.name}
-                </h5>
+                </h3>
               </Link>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
                 {moment(product.createdAt).format("DD/MM/YYYY")}
               </p>
-              <p className="text-gray-600 text-xs mt-1 truncate">
-                {product?.description?.substring(0, 50)}...
+              <p className="text-xs text-neutral-600 dark:text-neutral-300 truncate">
+                {product.description?.substring(0, 60)}...
               </p>
-              <p className="text-gray-600 flex items-center mt-1">${product.price}</p>
+              <p className="text-sm font-semibold text-primary">${product.price}</p>
 
-              <div className="mt-2">
-              
-                <button
-                  onClick={() =>
-                    navigate(`/admin/product/update/${product._id}`)
-                  }
-                  className="text-black rounded-sm text-xs hover:underline bg-blue-400 py-1 px-2"
-                >
-                  Update Product
-                </button>
-              </div>
+              <button
+                onClick={() =>
+                  navigate(`/admin/product/update/${product._id}`)
+                }
+                className="mt-2 bg-accent text-white text-xs font-medium px-3 py-1 rounded-md hover:bg-yellow-500 transition cursor-pointer"
+              >
+                Update Product
+              </button>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* No Products Message */}
+      {/* Empty State */}
       {products?.length === 0 && (
-        <div className="text-center mt-10 text-gray-600 text-sm">
+        <div className="text-center mt-10 text-neutral-600 dark:text-neutral-300 text-sm">
           No products found. Please add new products.
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

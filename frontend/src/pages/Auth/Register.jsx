@@ -1,142 +1,127 @@
-import React from 'react'
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../components/Loader";
-import { useRegisterMutation } from "../../redux/api/usersApiSlice.js";
-import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
+import { useRegisterMutation } from "../../redux/api/usersApiSlice";
+import { setCredentials } from "../../redux/features/auth/authSlice";
 
 const Register = () => {
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const dispatch = useDispatch()
-  const navigate= useNavigate()
-  const [register , {isLoading}] = useRegisterMutation()
-  const {userInfo} = useSelector(state=>state.auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [register, { isLoading }] = useRegisterMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
-  const search = useLocation()
-  const sp = new URLSearchParams(search)
-  const redirect = sp.get("redirect")||"/"
+  const { search } = useLocation();
+  const redirect = new URLSearchParams(search).get("redirect") || "/";
 
-  useEffect(()=>{
-    if (userInfo){
-        navigate(redirect)
-    }
-  }, [navigate , redirect , userInfo])
+  useEffect(() => {
+    if (userInfo) navigate(redirect);
+  }, [userInfo, navigate, redirect]);
 
-  const submitHandler= async(e)=>{
-    e.preventDefault()
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-    if (password!==confirmPassword) {
-        toast.error("Password doesnot match")
-
-        
-    } else {
-        
-
-        try {
-        const res = await register({username , email , password}).unwrap()
-        dispatch(setCredentials({...res}))
-        navigate(redirect)
-        toast.success("User Successfully registered")
-            
-        } catch (error) {
-            
-            console.error("Registration error:", error);
-            console.log("Error response:", error?.data); 
-            toast.error(error?.data?.message || "Registration failed. Please try again.");
-            
-        }
-        
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
     }
 
-
-  }
-
+    try {
+      const res = await register({ username, email, password }).unwrap();
+      dispatch(setCredentials(res));
+      toast.success("Registered successfully!");
+      navigate(redirect);
+    } catch (error) {
+      toast.error(error?.data?.message || "Registration failed, try again.");
+    }
+  };
 
   return (
-    <section className="flex justify-center items-center h-screen bg-gray-100">
+    <section className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       <form
         onSubmit={submitHandler}
-        className="bg-white p-6 rounded-lg shadow-md w-96"
+        className="bg-white p-8 rounded-xl shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Create an Account</h2>
 
-        {/* Name */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder='Enter Username'
-          />
-          
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-700 mb-1">Username</label>
+            <input
+              type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter username"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter email"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter password"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1">Confirm Password</label>
+            <input
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Confirm password"
+            />
+          </div>
         </div>
 
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder='Enter Email'
-          />
-         
+        <div className="text-sm mt-4 text-center">
+          Already have an account?
+          <Link
+            to={redirect ? `/login?redirect=${redirect}` : "/login"}
+            className="text-blue-600 ml-1 hover:underline"
+          >
+            Login
+          </Link>
         </div>
 
-        {/* Password */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder='Enter Password'
-          />
-          
-        </div>
-
-        {/* Confirm Password */}
-        <div className="mb-4">
-          <label className="block text-gray-700">Confirm Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder='Confirm Password'
-          />
-          
-        </div>
-
-        <div className='mt-4 mb-6'>
-            <p className='text-black '>
-                Already have account?{""}
-                <Link className="text-blue-500 ml-[0.5rem]" to={redirect ? `/login?redirect=${redirect}`:"/login" }>{""}Login</Link>
-            </p>
-        </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           disabled={isLoading}
+          className="w-full mt-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
         >
-          {isLoading?"Registering":"Register"}
+          {isLoading ? "Registering..." : "Register"}
         </button>
+
+        {isLoading && <Loader />}
       </form>
     </section>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

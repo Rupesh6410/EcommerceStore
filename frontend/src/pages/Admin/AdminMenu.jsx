@@ -1,103 +1,61 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const AdminMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Toggle Dropdown
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  const menuItems = [
+    { label: "Admin Dashboard", to: "/admin/dashboard" },
+    { label: "Create Category", to: "/admin/categorylist" },
+    { label: "Create Product", to: "/admin/productlist" },
+    { label: "All Products", to: "/admin/allproductslist" },
+    { label: "Manage User", to: "/admin/userlist" },
+    { label: "Manage Order", to: "/admin/orderlist" },
+  ];
 
   return (
     <div className="relative inline-block text-left">
-      {/* Button to Open Dropdown */}
+      {/* Toggle Button */}
       <button
-        onClick={toggleDropdown}
-        className="px-4 py-2 bg-blue-700 text-white rounded"
+        onClick={() => setIsOpen(!isOpen)}
+        className="px-4 py-2 rounded-lg bg-primary text-white font-medium shadow hover:bg-secondary transition duration-200 cursor-pointer"
       >
         Admin Menu
       </button>
 
-      {/* Dropdown Content */}
-      {isOpen && (
-        <div className="absolute mt-2 w-40 bg-white border rounded shadow-lg z-10">
-          <ul className="py-2">
-            <li>
-              <NavLink
-                to="/admin/dashboard"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-blue-200" : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                Admin Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/admin/categorylist"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-gray-200" : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                Create Category
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/admin/productlist"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-gray-200" : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                Create Product
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/admin/allproductslist"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-gray-200" : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                All Porducts
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/admin/userlist"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-gray-200 " : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                Manage User
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/admin/orderlist"
-                className={({ isActive }) =>
-                  `block px-4 py-2 text-gray-700 ${
-                    isActive ? "bg-gray-200" : "hover:bg-gray-100"
-                  }`
-                }
-              >
-                Manage Order
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      )}
+      {/* Dropdown Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="absolute mt-2 w-48 rounded-xl bg-white border border-neutral-200 shadow-xl z-50 overflow-hidden"
+          >
+            <ul className="flex flex-col">
+              {menuItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `block px-5 py-3 text-sm font-medium transition-colors cursor-pointer ${
+                        isActive
+                          ? "bg-accent text-white"
+                          : "text-neutral-700 hover:bg-neutral-100"
+                      }`
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
