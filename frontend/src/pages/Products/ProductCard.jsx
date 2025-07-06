@@ -23,7 +23,7 @@ const ProductCard = ({ p }) => {
       <div className="relative">
         <Link to={`/product/${p._id}`}>
           <img
-            src={`${IMAGE_BASE_URL}/${p.image}`}
+            src={`${IMAGE_BASE_URL}${p.image}`}
             alt={p.name}
             className="w-full h-44 object-cover transition-transform duration-300 hover:scale-105"
           />

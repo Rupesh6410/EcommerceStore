@@ -56,7 +56,7 @@ const ProductCarousel = () => {
                   {/* Image */}
                   <div className="h-[16rem] overflow-hidden relative">
                     <img
-                      src={`${IMAGE_BASE_URL}/${image}`}
+                      src={`${IMAGE_BASE_URL}${image}`}
                       alt={name || 'Product'}
                       className="w-full h-[16rem] object-contain transition-transform duration-300 hover:scale-105"
                     />

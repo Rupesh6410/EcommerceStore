@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
-import cors from "cors"; // ✅ Add this line
+import cors from "cors"; 
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -17,9 +17,9 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS Configuration
+
 const allowedOrigins = [
-  "http://localhost:5173", // your Vite frontend
+  "http://localhost:5173", 
   "https://ecommerce-store-eight-drab.vercel.app", 
 ];
 
