@@ -4,6 +4,7 @@ import { useAllProductsQuery } from "../../redux/api/productApiSlice";
 import AdminMenu from "./AdminMenu";
 import Loader from "../../components/Loader";
 import { motion } from "framer-motion";
+import { IMAGE_BASE_URL } from "../../redux/constants";
 
 const AllProducts = () => {
   const { data: products, isLoading, isError } = useAllProductsQuery();
@@ -41,7 +42,7 @@ const AllProducts = () => {
           >
             <Link to={`/admin/product/update/${product._id}`}>
               <img
-                src={`${IMAGE_BASE_URL}/${product.image}`}
+                src={`${IMAGE_BASE_URL}${product.image}`}
                 alt={product.name}
                 className="w-full h-48 object-cover"
               />

@@ -50,8 +50,8 @@ const Cart = () => {
                     {/* Product Image */}
                     <div className="w-20 h-20 flex-shrink-0">
                       <img
-                        src={item.image}
-                        alt={item.name}
+                        src={`${IMAGE_BASE_URL}${item.image}`}
+                        alt={`${IMAGE_BASE_URL}${item.image}`}
                         className="w-full h-full object-cover rounded-lg"
                       />
                     </div>
