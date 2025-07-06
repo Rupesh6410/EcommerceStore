@@ -1,7 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { BASE_URL, USERS_URL } from "../constants";
-
-
+import { USERS_URL } from "../constants";
 
 export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,68 +8,77 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/auth`,
                 method: 'POST',
                 body: data,
-            })
+            }),
+            invalidatesTags: ["User"], 
         }),
-        logout:builder.mutation({
-            query:()=>({
-                url:`${USERS_URL}/logout`,
-                method:"POST",
-            })
         
+        logout: builder.mutation({
+            query: () => ({
+                url: `${USERS_URL}/logout`,
+                method: "POST",
+            }),
+            invalidatesTags: ["User"], 
         }),
-        register:builder.mutation({
-            query:(data)=>({
-                url:`${USERS_URL}`,
-                method:"POST",
-                body:data,
-            })
-
-
+        
+        register: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["User"], 
         }),
+        
         profile: builder.mutation({
-            query:(data)=>({
-                url:`${USERS_URL}/profile`,
-                method:"PUT",
-                body:data
-            })
-        }),
-        getUsers:builder.query({
-            query:()=>({
-                url:`${USERS_URL}`,
+            query: (data) => ({
+                url: `${USERS_URL}/profile`,
+                method: "PUT",
+                body: data,
             }),
-            providesTags:["User"],
-            keepUnusedDataFor:5
+            invalidatesTags: ["User"], // Refresh user data after profile update
         }),
-        deleteUser:builder.mutation({
-            query:(userId)=>({
-                url:`${USERS_URL}/${userId}`,
-                method:"DELETE"
+        
+        getUsers: builder.query({
+            query: () => ({
+                url: `${USERS_URL}`,
             }),
-            invalidatesTags:["User"],
+            providesTags: ["User"],
+            keepUnusedDataFor: 5,
         }),
-        getUserDetails:builder.query({
-            query:(id)=>({
-                url:`${USERS_URL}/${id}`}),
-                keepUnusedDataFor:5
-        }),
-        updateUser:builder.mutation({
-            query:(data)=>({
-                url:`${USERS_URL}/${data.userId}`,
-                method:"PUT",
-                body:data
+        
+        deleteUser: builder.mutation({
+            query: (userId) => ({
+                url: `${USERS_URL}/${userId}`,
+                method: "DELETE",
             }),
-            invalidatesTags:["User"]
-        })
+            invalidatesTags: ["User"],
+        }),
+        
+        getUserDetails: builder.query({
+            query: (id) => ({
+                url: `${USERS_URL}/${id}`,
+            }),
+            keepUnusedDataFor: 5,
+        }),
+        
+        updateUser: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/${data.userId}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["User"],
+        }),
+    }),
+});
 
-
-
-
-    })
-    
-    })
-    
-
-
-export const { useLoginMutation , useLogoutMutation ,useRegisterMutation , useProfileMutation ,
-    useGetUsersQuery , useDeleteUserMutation , useGetUserDetailsQuery , useUpdateUserMutation,
-} = usersApiSlice
+export const {
+    useLoginMutation,
+    useLogoutMutation,
+    useRegisterMutation,
+    useProfileMutation,
+    useGetUsersQuery,
+    useDeleteUserMutation,
+    useGetUserDetailsQuery,
+    useUpdateUserMutation,
+} = usersApiSlice;

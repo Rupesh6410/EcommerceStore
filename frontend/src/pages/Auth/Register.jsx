@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { data, Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
@@ -32,15 +32,63 @@ const Register = () => {
       return;
     }
 
+    // Basic password validation
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       const res = await register({ username, email, password }).unwrap();
-      dispatch(setCredentials(res));
-      toast.success("Registered successfully!");
+      
+      // Debug: Log the response to see its structure
+      console.log("Register API Response:", res);
+      
+      // Validate response structure
+      if (!res) {
+        throw new Error("Invalid response from server");
+      }
+      
+      // Handle the expected response structure from your backend
+      // Based on your userController, it should be: { token, user: {...} }
+      const { user, token } = res;
+      console.log("Register API Response:", res);
+      if (!token || !user) {
+        console.error("Missing token or user in response:", res);
+        throw new Error("Invalid response structure - missing token or user data");
+      }
+      
+      // Dispatch with proper structure
+      dispatch(setCredentials({ 
+        user: user, 
+        token: token 
+      }));
+      
+      toast.success(`Welcome ${user.username}! Registration successful!`);
       navigate(redirect);
+      
     } catch (error) {
-      toast.error(error?.data?.message || "Registration failed, try again.");
+      console.error("Register error:", error);
+      
+      // Handle different error types
+      let errorMessage = "Registration failed. Please try again.";
+      
+      if (error?.data?.message) {
+        errorMessage = error.data.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.status === 400) {
+        errorMessage = "Invalid registration data. Please check your input.";
+      } else if (error?.status === 409) {
+        errorMessage = "User already exists with this email.";
+      } else if (error?.status >= 500) {
+        errorMessage = "Server error. Please try again later.";
+      }
+      
+      toast.error(errorMessage);
     }
   };
+  
 
   return (
     <section className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
@@ -60,6 +108,8 @@ const Register = () => {
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Enter username"
+              minLength={3}
+              maxLength={50}
             />
           </div>
 
@@ -83,7 +133,8 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Enter password"
+              placeholder="Enter password (min 6 characters)"
+              minLength={6}
             />
           </div>
 
@@ -96,6 +147,7 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
               placeholder="Confirm password"
+              minLength={6}
             />
           </div>
         </div>
@@ -113,12 +165,16 @@ const Register = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full mt-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          className="w-full mt-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? "Registering..." : "Register"}
         </button>
 
-        {isLoading && <Loader />}
+        {isLoading && (
+          <div className="flex justify-center mt-3">
+            <Loader />
+          </div>
+        )}
       </form>
     </section>
   );
