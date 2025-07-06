@@ -62,14 +62,6 @@ const Navigation = () => {
                 <Link to="/" className="text-xl font-bold">
                     E-Shop
                 </Link>
-                <Link to="/cart" className="relative">
-                    <AiOutlineShoppingCart size={24} />
-                    {cartItems.length > 0 && (
-                        <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-                            {cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                        </span>
-                    )}
-                </Link>
             </div>
 
             {/* Overlay when sidebar is open on mobile */}
