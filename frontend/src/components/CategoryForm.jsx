@@ -10,8 +10,9 @@ const CategoryForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md p-6 rounded-2xl glass-card border border-white/10 space-y-5"
+      className="w-full max-w-md mx-auto p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800 shadow-md space-y-4"
     >
+<<<<<<< HEAD
 <<<<<<< HEAD
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-300 ml-1">
@@ -38,9 +39,22 @@ const CategoryForm = ({
 
       <div className="flex justify-end gap-2">
 >>>>>>> main
+=======
+      {/* Input */}
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Enter category name"
+        className="w-full px-4 py-3 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary"
+      />
+
+      {/* Button Group */}
+      <div className="flex justify-end gap-2">
+>>>>>>> parent of eb9ef12 (Fix: improve responsiveness)
         <button
           type="submit"
-          className="px-6 py-2.5 rounded-xl btn-primary shadow-lg font-bold"
+          className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-secondary transition font-medium"
         >
           {buttonText}
         </button>
@@ -48,7 +62,7 @@ const CategoryForm = ({
           <button
             type="button"
             onClick={handleDelete}
-            className="px-6 py-2.5 rounded-xl bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/30 transition-all font-bold"
+            className="px-4 py-2 rounded-lg bg-accent text-white hover:bg-yellow-600 transition font-medium"
           >
             Delete
           </button>
