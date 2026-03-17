@@ -35,7 +35,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body: data,
             }),
-            invalidatesTags: ["User"], // Refresh user data after profile update
+            invalidatesTags: ["User"],
         }),
         
         getUsers: builder.query({

@@ -25,10 +25,13 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
             transition={{ type: "spring", bounce: 0, duration: 0.4 }}
             className="w-full max-w-lg glass-card rounded-3xl p-8 relative z-10 mx-4 border border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)]"
           >
+<<<<<<< HEAD
             {/* Top decorative glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-70"></div>
 
             {/* Close Button */}
+=======
+>>>>>>> main
             <button
               onClick={onClose}
               className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-card/50 text-gray-400 hover:text-white hover:bg-white/10 transition-colors border border-white/5"
@@ -36,13 +39,13 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
               <IoClose size={20} />
             </button>
 
-            {/* Title */}
             {title && (
               <h2 className="text-2xl font-heading font-bold text-white mb-6 pr-8">
                 {title}
               </h2>
             )}
 
+<<<<<<< HEAD
             {/* Body */}
             <div className="text-gray-300">
               {children}
@@ -50,6 +53,13 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
 
             {/* Footer (optional) */}
             {footer && <div className="mt-8 pt-6 border-t border-white/10">{footer}</div>}
+=======
+            <div className="text-sm text-neutral-700 dark:text-neutral-300">
+              {children}
+            </div>
+
+            {footer && <div className="mt-6">{footer}</div>}
+>>>>>>> main
           </motion.div>
         </div>
       )}
