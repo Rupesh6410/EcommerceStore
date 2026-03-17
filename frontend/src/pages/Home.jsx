@@ -13,26 +13,27 @@ const Home = () => {
     <>
       {!keyword && <Header />}
 
-      <section className="px-4 md:px-12 lg:px-24 mt-6">
+      <section className="px-4 md:px-12 lg:px-24 mt-12 mb-20">
         {isLoading ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error?.data?.message || error.error}</Message>
         ) : (
           <>
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-2xl font-bold text-gray-800">Special Products</h1>
+            <div className="flex items-center justify-between mb-10 animate-fade-in relative">
+              <div className="absolute -left-4 w-1 flex-shrink-0 h-8 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
+              <h1 className="text-3xl font-heading font-bold text-white tracking-wide ml-2">Special Products</h1>
               <Link
                 to="/shop"
-                className="text-white bg-pink-600 hover:bg-pink-700 py-2 px-4 rounded-lg transition duration-300"
+                className="btn-secondary flex items-center gap-2 group"
               >
-                Go to Shop →
+                Go to Shop <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
               {data?.products?.map((product) => (
-                <div key={product._id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+                <div key={product._id} className="w-full flex justify-center">
                   <Product product={product} />
                 </div>
               ))}
