@@ -32,7 +32,6 @@ const Register = () => {
       return;
     }
 
-    // Basic password validation
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
@@ -41,16 +40,11 @@ const Register = () => {
     try {
       const res = await register({ username, email, password }).unwrap();
       
-      // Debug: Log the response to see its structure
       console.log("Register API Response:", res);
       
-      // Validate response structure
       if (!res) {
         throw new Error("Invalid response from server");
       }
-      
-      // Handle the expected response structure from your backend
-      // Based on your userController, it should be: { token, user: {...} }
       const { user, token } = res;
       console.log("Register API Response:", res);
       if (!token || !user) {
@@ -58,7 +52,6 @@ const Register = () => {
         throw new Error("Invalid response structure - missing token or user data");
       }
       
-      // Dispatch with proper structure
       dispatch(setCredentials({ 
         user: user, 
         token: token 
@@ -70,7 +63,6 @@ const Register = () => {
     } catch (error) {
       console.error("Register error:", error);
       
-      // Handle different error types
       let errorMessage = "Registration failed. Please try again.";
       
       if (error?.data?.message) {

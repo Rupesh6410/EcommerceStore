@@ -14,7 +14,6 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
             transition={{ duration: 0.3 }}
             className="w-[90%] max-w-md bg-white rounded-2xl p-6 shadow-xl relative dark:bg-neutral-900"
           >
-            {/* Close Button */}
             <button
               onClick={onClose}
               className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white text-xl"
@@ -22,19 +21,16 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
               <IoClose />
             </button>
 
-            {/* Title */}
             {title && (
               <h2 className="text-lg font-semibold text-neutral-800 mb-4 dark:text-neutral-100">
                 {title}
               </h2>
             )}
 
-            {/* Body */}
             <div className="text-sm text-neutral-700 dark:text-neutral-300">
               {children}
             </div>
 
-            {/* Footer (optional) */}
             {footer && <div className="mt-6">{footer}</div>}
           </motion.div>
         </div>

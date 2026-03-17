@@ -8,10 +8,8 @@ import store from './redux/store.js'
 import Profile from './pages/User/Profile.jsx'
 
 
-// priate route
 import PrivateRoute from './components/PrivateRoute.jsx'
 
-// Auth
 import Login from './pages/Auth/Login.jsx'
 import Register from './pages/Auth/Register.jsx'
 import AdminRoute from './pages/Admin/AdminRoute.jsx'
@@ -57,7 +55,6 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
    
 
-    {/* Admin route */}
 <Route path="/admin" element={<AdminRoute />}>
   <Route path="userlist" element={<UserList />} />
   <Route path="categorylist" element={<CategoryList />} />

@@ -12,7 +12,6 @@ const CategoryForm = ({
       onSubmit={handleSubmit}
       className="w-full max-w-md mx-auto p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800 shadow-md space-y-4"
     >
-      {/* Input */}
       <input
         type="text"
         value={value}
@@ -21,7 +20,6 @@ const CategoryForm = ({
         className="w-full px-4 py-3 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary"
       />
 
-      {/* Button Group */}
       <div className="flex justify-end gap-2">
         <button
           type="submit"

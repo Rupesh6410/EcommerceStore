@@ -38,17 +38,13 @@ const Login = () => {
     try {
       const res = await login({ email, password }).unwrap();
       
-      // Debug: Log the response to see its structure
       console.log("Login API Response:", res);
     
       
-      // Validate response structure
       if (!res) {
         throw new Error("Invalid response from server");
       }
       
-      // Handle the expected response structure from your backend
-      // Based on your userController, it should be: { token, user: {...} }
       const { token, user } = res;
       console.log("Login Token:", token);
       console.log("Login User:", user);
@@ -58,7 +54,6 @@ const Login = () => {
         throw new Error("Invalid response structure - missing token or user data");
       }
       
-      // Dispatch with proper structure
       dispatch(setCredentials({ 
         user: user, 
         token: token 
@@ -70,7 +65,6 @@ const Login = () => {
     } catch (error) {
       console.error("Login error:", error);
       
-      // Handle different error types
       let errorMessage = "Login failed. Please try again.";
       
       if (error?.data?.message) {
@@ -95,7 +89,6 @@ const Login = () => {
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sign In</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Field */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -112,7 +105,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password Field */}
           <div className="relative">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -137,7 +129,6 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Actions */}
           <div className="flex items-center justify-between text-sm text-gray-500">
             <Link to="#" className="hover:underline">
               Forgot Password?
@@ -150,7 +141,6 @@ const Login = () => {
             </Link>
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={isLoading}

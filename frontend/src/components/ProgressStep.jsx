@@ -28,7 +28,6 @@ const ProgressStep = ({ step1, step2, step3 }) => {
             </span>
           </div>
 
-          {/* Connector line except after the last step */}
           {index < steps.length - 1 && (
             <div
               className={`hidden sm:block w-24 h-1 rounded ${

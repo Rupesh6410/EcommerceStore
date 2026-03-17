@@ -8,9 +8,8 @@ import {
     AiOutlineLogin,
     AiOutlineUserAdd,
     AiOutlineShoppingCart,
-    AiOutlineSearch, // Added for potential search icon on mobile
 } from "react-icons/ai";
-import { FaHeart, FaBars, FaTimes } from "react-icons/fa"; // Added FaBars and FaTimes for toggle
+import { FaHeart, FaBars, FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { logOut } from "../../redux/features/auth/authSlice";
@@ -21,18 +20,16 @@ const Navigation = () => {
     const { cartItems } = useSelector((state) => state.cart);
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [showSidebar, setShowSidebar] = useState(false); // State to control mobile sidebar visibility
+    const [showSidebar, setShowSidebar] = useState(false);
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
 
-    // Toggle sidebar visibility for mobile
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar);
     };
 
-    // Close sidebar (e.g., when clicking outside or navigating)
     const closeSidebar = () => {
         setShowSidebar(false);
     };
@@ -46,15 +43,14 @@ const Navigation = () => {
             await logoutApiCall().unwrap();
             dispatch(logOut());
             navigate("/login");
-            closeSidebar(); // Close sidebar after logout
+            closeSidebar();
         } catch (err) {
-            console.error(err); // Use console.error for errors
+            console.error(err);
         }
     };
 
     return (
         <>
-            {/* Hamburger menu for mobile */}
             <div className="xl:hidden lg:hidden md:flex sm:flex flex-row items-center justify-between p-4 bg-[#000] text-white fixed top-0 left-0 w-full z-[10000]">
                 <button onClick={toggleSidebar} className="text-white focus:outline-none">
                     {showSidebar ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -64,7 +60,6 @@ const Navigation = () => {
                 </Link>
             </div>
 
-            {/* Overlay when sidebar is open on mobile */}
             {showSidebar && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-[9998] xl:hidden lg:hidden md:block sm:block"
@@ -72,10 +67,8 @@ const Navigation = () => {
                 ></div>
             )}
 
-            {/* Main Navigation Container */}
             <div
                 style={{ zIndex: 9999 }}
-                // Dynamically apply 'sidebar-open' class based on state
                 className={`
                     ${showSidebar ? "sidebar-open" : "hidden"} 
                     xl:flex lg:flex md:hidden sm:hidden 
@@ -85,14 +78,13 @@ const Navigation = () => {
                 id="navigation-container"
             >
                 <div className="flex flex-col justify-center space-y-4 mt-[3rem] ">
-                    {/* The mt-[3rem] was causing issues on mobile, moved it to the parent div or consider removing/adjusting */}
                     <Link
                         to="/"
                         className="flex items-center transition-transform transform hover:translate-x-2"
-                        onClick={closeSidebar} // Close sidebar on navigation
+                        onClick={closeSidebar}
                     >
                         <AiOutlineHome className="mr-2" size={20} />
-                        <span className="nav-item-name">HOME</span>{" "}
+                        <span className="nav-item-name">HOME</span>
                     </Link>
 
                     <Link
@@ -101,23 +93,23 @@ const Navigation = () => {
                         onClick={closeSidebar}
                     >
                         <AiOutlineShopping className="mr-2" size={20} />
-                        <span className="nav-item-name">SHOP</span>{" "}
+                        <span className="nav-item-name">SHOP</span>
                     </Link>
 
                     <Link
                         to="/cart"
-                        className="flex items-center transition-transform transform hover:translate-x-2 relative"
+                        className="flex items-center transition-transform transform hover:translate-x-2"
                         onClick={closeSidebar}
                     >
-                        <AiOutlineShoppingCart className="mr-2" size={20} />
-                        <span className="nav-item-name">CART</span>{" "}
-                        {cartItems.length > 0 && (
-                            <div className="absolute -top-3 -right-2"> {/* Adjusted position */}
-                                <span className="bg-pink-500 text-white text-xs font-medium px-2 py-1 rounded-full ">
+                        <div className="relative mr-2">
+                            <AiOutlineShoppingCart size={20} />
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-[10px] font-medium px-1.5 py-0.5 rounded-full">
                                     {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                                 </span>
-                            </div>
-                        )}
+                            )}
+                        </div>
+                        <span className="nav-item-name">CART</span>
                     </Link>
 
                     <Link
@@ -125,22 +117,15 @@ const Navigation = () => {
                         className="flex items-center transition-transform transform hover:translate-x-2"
                         onClick={closeSidebar}
                     >
-                        <FaHeart className="mr-2" size={20} />
-                        <span className="nav-item-name">FAVORITE</span>{" "}
-                        <FavoriteCounts />
+                        <div className="relative mr-2">
+                            <FaHeart size={20} />
+                            <FavoriteCounts />
+                        </div>
+                        <span className="nav-item-name">FAVORITE</span>
                     </Link>
-                    {/* You might want a search input here too for mobile */}
-                    {/* <div className="flex items-center">
-                        <AiOutlineSearch className="mr-2" size={20} />
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            className="search-input bg-transparent border-b border-gray-600 focus:outline-none text-white w-full"
-                        />
-                    </div> */}
                 </div>
 
-                <div className="relative mb-4"> {/* Added mb-4 for some bottom margin */}
+                <div className="relative mb-4">
                     <button onClick={toggleDropdown} className="flex items-center text-white focus:outline-none ">
                         {userInfo ? (
                             <span className="mr-1">{userInfo.username}</span>
@@ -238,7 +223,7 @@ const Navigation = () => {
                 </div>
 
                 {!userInfo && (
-                    <ul className="mb-4"> {/* Added mb-4 for some bottom margin */}
+                    <ul className="mb-4">
                         <li>
                             <Link
                                 to="/login"
@@ -246,7 +231,7 @@ const Navigation = () => {
                                 onClick={closeSidebar}
                             >
                                 <AiOutlineLogin className="mr-2" size={20} />
-                                <span className="nav-item-name">LOGIN</span>{" "}
+                                <span className="nav-item-name">LOGIN</span>
                             </Link>
                         </li>
                         <li>
@@ -256,7 +241,7 @@ const Navigation = () => {
                                 onClick={closeSidebar}
                             >
                                 <AiOutlineUserAdd className="mr-2" size={20} />
-                                <span className="nav-item-name">REGISTER</span>{" "}
+                                <span className="nav-item-name">REGISTER</span>
                             </Link>
                         </li>
                     </ul>
