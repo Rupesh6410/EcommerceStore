@@ -10,6 +10,7 @@ import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
+
 dotenv.config();
 const port = process.env.PORT || 4000;
 
@@ -36,6 +37,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 // Middleware
 app.use(express.json());
