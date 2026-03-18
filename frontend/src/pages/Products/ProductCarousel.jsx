@@ -30,15 +30,13 @@ const ProductCarousel = () => {
   };
 
   return (
-    <div className="w-full relative group">
-      {isLoading ? (
-        <div className="h-[400px] flex items-center justify-center">Loading...</div>
-      ) : error ? (
-        <Message variant="error">
+    <div className="w-full md:w-[50%] lg:w-[40%] mx-auto mt-8">
+      {isLoading ? null : error ? (
+        <Message variant="danger">
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <Slider {...settings} className="rounded-3xl overflow-hidden">
+        <Slider {...settings}>
           {products?.map(
             ({
               image,
@@ -53,81 +51,56 @@ const ProductCarousel = () => {
               quantity,
               countInStock,
             }) => (
-              <div key={_id} className="relative w-full h-[400px] lg:h-[500px] outline-none">
-                <div className="absolute inset-0 bg-black/60 z-10"></div>
-
-                {/* Background Image Setup */}
-                <div className="absolute inset-0 z-0">
-                  <img
-                    src={`${IMAGE_BASE_URL}${image}`}
-                    alt={name}
-                    className="w-full h-full object-cover opacity-30 blur-sm scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent"></div>
-                </div>
-
-                {/* Content Container */}
-                <div className="relative z-20 w-full h-full flex flex-col md:flex-row items-center container mx-auto px-6 lg:px-12">
-
-                  {/* Left content: Information */}
-                  <div className="w-full md:w-1/2 flex flex-col justify-center h-full pt-10 md:pt-0">
-                    <span className="inline-block bg-primary/20 text-primary border border-primary/30 text-xs font-bold px-3 py-1 rounded-full self-start mb-4">
-                      {brand} • Top Rated
+              <Link to={`/product/${_id}`} key={_id}>
+                <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:scale-[1.01]">
+                  {/* Image */}
+                  <div className="h-[16rem] overflow-hidden relative">
+                    <img
+                      src={`${IMAGE_BASE_URL}${image}`}
+                      alt={name || 'Product'}
+                      className="w-full h-[16rem] object-contain transition-transform duration-300 hover:scale-105"
+                    />
+                    <span className="absolute top-2 left-2 bg-pink-600 text-white text-xs px-2 py-1 rounded-full shadow">
+                      Top Rated
                     </span>
-                    <h2 className="text-4xl lg:text-5xl font-heading font-bold text-white mb-4 leading-tight drop-shadow-lg">
-                      {name}
-                    </h2>
-                    <p className="text-gray-300 mb-6 line-clamp-2 md:line-clamp-3 max-w-lg text-lg">
-                      {description}
-                    </p>
-                    <div className="flex items-center gap-6 mb-8">
-                      <span className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                        ${price}
-                      </span>
+                  </div>
+
+                  {/* Details */}
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <h2 className="text-sm font-bold text-gray-800 truncate">{name}</h2>
+                      <p className="text-sm font-semibold text-pink-600">${price}</p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 text-sm text-gray-400 max-w-md">
-                      <div className="flex items-center gap-2">
-                        <FaClock className="text-primary" />
+                    <p className="text-xs text-gray-600 mb-3">
+                      {description?.substring(0, 80)}...
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-700">
+                      <div className="flex items-center space-x-1">
+                        <FaStore className="text-pink-500" aria-hidden />
+                        <span>{brand}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <FaClock className="text-orange-500" aria-hidden />
                         <span>{moment(createdAt).fromNow()}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <FaStar className="text-primary" />
+                      <div className="flex items-center space-x-1">
+                        <FaStar className="text-yellow-500" aria-hidden />
                         <span>{Math.round(rating)} / 5</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <FaShoppingCart className="text-primary" />
-                        <span>Sold: {quantity}</span>
+                      <div className="flex items-center space-x-1">
+                        <FaShoppingCart className="text-green-500" aria-hidden />
+                        <span>Qty: {quantity}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <FaBox className="text-primary" />
+                      <div className="flex items-center space-x-1 col-span-2">
+                        <FaBox className="text-blue-500" aria-hidden />
                         <span>Stock: {countInStock}</span>
                       </div>
                     </div>
-
-                    <div className="mt-8">
-                      <Link
-                        to={`/product/${_id}`}
-                        className="btn-primary inline-flex items-center gap-2 px-8 py-3 rounded-full text-lg shadow-primary/40 hover:shadow-primary/60"
-                      >
-                        Buy Now <span className="text-xl">→</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Right content: Product Image */}
-                  <div className="hidden md:flex w-1/2 h-full items-center justify-center p-8 relative">
-                    {/* Glowing background behind image */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/30 blur-[60px] rounded-full pointer-events-none"></div>
-
-                    <img
-                      src={`${IMAGE_BASE_URL}${image}`}
-                      alt={name}
-                      className="w-full max-h-[90%] object-contain drop-shadow-2xl relative z-10 transition-transform duration-700 hover:scale-105"
-                    />
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           )}
         </Slider>
