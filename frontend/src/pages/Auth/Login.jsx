@@ -37,7 +37,6 @@ const Login = () => {
 
     try {
       const res = await login({ email, password }).unwrap();
-<<<<<<< HEAD
 
       // Debug: Log the response to see its structure
       console.log("Login API Response:", res);
@@ -50,16 +49,6 @@ const Login = () => {
 
       // Handle the expected response structure from your backend
       // Based on your userController, it should be: { token, user: {...} }
-=======
-      
-      console.log("Login API Response:", res);
-    
-      
-      if (!res) {
-        throw new Error("Invalid response from server");
-      }
-      
->>>>>>> main
       const { token, user } = res;
       console.log("Login Token:", token);
       console.log("Login User:", user);
@@ -68,18 +57,11 @@ const Login = () => {
         console.error("Missing token or user in response:", res);
         throw new Error("Invalid response structure - missing token or user data");
       }
-<<<<<<< HEAD
 
       // Dispatch with proper structure
       dispatch(setCredentials({
         user: user,
         token: token
-=======
-      
-      dispatch(setCredentials({ 
-        user: user, 
-        token: token 
->>>>>>> main
       }));
 
       toast.success(`Welcome back, ${user.username}!`);
@@ -87,12 +69,8 @@ const Login = () => {
 
     } catch (error) {
       console.error("Login error:", error);
-<<<<<<< HEAD
 
       // Handle different error types
-=======
-      
->>>>>>> main
       let errorMessage = "Login failed. Please try again.";
 
       if (error?.data?.message) {
@@ -118,77 +96,10 @@ const Login = () => {
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-[50px] pointer-events-none"></div>
         <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-secondary/20 rounded-full blur-[50px] pointer-events-none"></div>
 
-<<<<<<< HEAD
         <div className="relative z-10">
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/30">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-=======
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your email"
-              autoComplete="email"
-            />
-          </div>
-
-          <div className="relative">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type={passwordVisible ? "text" : "password"}
-              id="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your password"
-              autoComplete="current-password"
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute top-9 right-3 text-gray-600 hover:text-gray-800"
-              aria-label={passwordVisible ? "Hide password" : "Show password"}
-            >
-              {passwordVisible ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <Link to="#" className="hover:underline">
-              Forgot Password?
-            </Link>
-            <Link
-              to={redirect ? `/register?redirect=${redirect}` : "/register"}
-              className="text-blue-600 hover:underline"
-            >
-              Create an Account
-            </Link>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </button>
-
-          {isLoading && (
-            <div className="flex justify-center mt-3">
-              <Loader />
->>>>>>> main
             </div>
           </div>
 

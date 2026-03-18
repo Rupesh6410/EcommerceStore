@@ -39,7 +39,6 @@ const Register = () => {
 
     try {
       const res = await register({ username, email, password }).unwrap();
-<<<<<<< HEAD
 
       // Debug: Log the response to see its structure
       console.log("Register API Response:", res);
@@ -51,32 +50,17 @@ const Register = () => {
 
       // Handle the expected response structure from your backend
       // Based on your userController, it should be: { token, user: {...} }
-=======
-      
-      console.log("Register API Response:", res);
-      
-      if (!res) {
-        throw new Error("Invalid response from server");
-      }
->>>>>>> main
       const { user, token } = res;
       console.log("Register API Response:", res);
       if (!token || !user) {
         console.error("Missing token or user in response:", res);
         throw new Error("Invalid response structure - missing token or user data");
       }
-<<<<<<< HEAD
 
       // Dispatch with proper structure
       dispatch(setCredentials({
         user: user,
         token: token
-=======
-      
-      dispatch(setCredentials({ 
-        user: user, 
-        token: token 
->>>>>>> main
       }));
 
       toast.success(`Welcome ${user.username}! Registration successful!`);
@@ -84,12 +68,8 @@ const Register = () => {
 
     } catch (error) {
       console.error("Register error:", error);
-<<<<<<< HEAD
 
       // Handle different error types
-=======
-      
->>>>>>> main
       let errorMessage = "Registration failed. Please try again.";
 
       if (error?.data?.message) {
